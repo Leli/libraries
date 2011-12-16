@@ -23,6 +23,7 @@
 	<scm>
 		<url>git@github.com:marssa/libraries.git</url>
 		<connection>ssh</connection>
+		<developerConnection>Clayton Tabone, Warren Zahra, Amanda Fenech, Alan Grech</developerConnection>
 	</scm>
 
 	<issueManagement>
@@ -112,7 +113,7 @@
 				<artifactId>maven-deploy-plugin</artifactId>
 				<version>2.5</version>
 				<configuration>
-					<altDeploymentRepository>libraries::default::file:../marssa-mvn-repo/snapshots</altDeploymentRepository>
+					<altDeploymentRepository>footprint::default::file:../../git/marssa-mvn-repo/snapshots</altDeploymentRepository>
 				</configuration>
 			</plugin>
 		</plugins>
