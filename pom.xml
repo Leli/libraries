@@ -8,10 +8,39 @@
 	<packaging>bundle</packaging>
 
 	<name>MARSSA Libraries OSGi Bundle</name>
+	<url>http://www.marsec-xl-projects.org/projects/libraries</url>
+	<description>This project was created specifically to handle the libraries which are used by MARSSA. Some of these libraries are developed externally and others are developed as part of the MARSSA effort. The nature of the libraries in this project is generic in the sense that libraries developed internally as part of MARSSA can possible be used by other projects outside of MARSSA.</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+
+	<organization>
+		<name>MI-SE@MALTA Foundation</name>
+		<url>http://www.marsec-xl.org/</url>
+	</organization>
+
+	<scm>
+		<url>git@github.com:marssa/libraries.git</url>
+		<connection>ssh</connection>
+	</scm>
+
+	<issueManagement>
+		<system>Redmine</system>
+		<url>http://www.marsec-xl-projects.org/projects/libraries</url>
+	</issueManagement>
+
+	<!-- This stub section is only needed in older versions of Maven -->
+	<distributionManagement>
+		<repository>
+			<id>repo</id>
+			<url>https://raw.github.com/marssa/marssa-mvn-repo/master/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshot-repo</id>
+			<url>https://raw.github.com/marssa/marssa-mvn-repo/master/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 	<repositories>
 		<repository>
@@ -76,6 +105,14 @@
 					<instructions>
 						<Bundle-Activator>mise.marssa.libraries.Activator</Bundle-Activator>
 					</instructions>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<altDeploymentRepository>libraries::default::file:../marssa-mvn-repo/snapshots</altDeploymentRepository>
 				</configuration>
 			</plugin>
 		</plugins>
