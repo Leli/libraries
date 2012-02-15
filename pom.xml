@@ -12,6 +12,7 @@
 	<description>This project was created specifically to handle the libraries which are used by MARSSA. Some of these libraries are developed externally and others are developed as part of the MARSSA effort. The nature of the libraries in this project is generic in the sense that libraries developed internally as part of MARSSA can possible be used by other projects outside of MARSSA.</description>
 
 	<properties>
+		<javaVersion>1.6</javaVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -71,21 +72,28 @@
 	</distributionManagement>
 
 	<repositories>
+		<!-- Contains GPSd4Java -->
 		<repository>
 			<id>hoegergroup-repo</id>
 			<name>Repository on forge.hoegergroup.de</name>
 			<url>http://maven.forge.hoegergroup.de/</url>
 		</repository>
+		<!-- Contains Java Modbus Library (jamod) -->
 		<repository>
-			<id>asterizmo.etl.luc.edu</id>
-			<name>asterizmo.etl.luc.edu-releases</name>
-			<url>http://maven.etl.luc.edu/artifactory/ext-releases-local</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>central</id>
+			<name>libs-releases</name>
+			<url>http://maven.etl.luc.edu/artifactory/libs-releases</url>
 		</repository>
+		<!-- Official Maven repository for Restlet -->
 		<repository>
 			<id>maven-restlet</id>
 			<name>Public online Restlet repository</name>
 			<url>http://maven.restlet.org</url>
 		</repository>
+		<!-- Temporary repository containing MARSSA artifacts -->
 		<repository>
 			<id>marssa-mvn-repo</id>
 			<name>MARSSA Repository on github.com</name>
@@ -121,11 +129,6 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>org.rxtx</groupId>
-			<artifactId>rxtx</artifactId>
-			<version>2.1.7</version>
-		</dependency>
-		<dependency>
 			<groupId>net.sf</groupId>
 			<artifactId>marineapi</artifactId>
 			<version>0.5.137-SNAPSHOT</version>
@@ -134,17 +137,47 @@
 
 	<build>
 		<plugins>
+			<!-- Specify Java compiler version -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>${javaVersion}</source>
+					<target>${javaVersion}</target>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-simple</artifactId>
+						<version>1.6.4</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
+			<!-- Bundle artifact as OSGi bundle -->
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
-				<version>2.2.0</version>
+				<version>2.3.6</version>
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
 						<Bundle-Activator>mise.marssa.libraries.Activator</Bundle-Activator>
+						<Embed-Dependency>*;scope=compile|runtime;inline=false;artifactId=!footprint</Embed-Dependency>
 					</instructions>
 				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>install</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
+
+			<!-- Deploy to alternate repository for github -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
