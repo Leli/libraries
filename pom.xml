@@ -146,13 +146,6 @@
 					<source>${javaVersion}</source>
 					<target>${javaVersion}</target>
 				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.slf4j</groupId>
-						<artifactId>slf4j-simple</artifactId>
-						<version>1.6.4</version>
-					</dependency>
-				</dependencies>
 			</plugin>
 
 			<!-- Bundle artifact as OSGi bundle -->
@@ -164,6 +157,7 @@
 				<configuration>
 					<instructions>
 						<Bundle-Activator>mise.marssa.libraries.Activator</Bundle-Activator>
+						<excludeDependencies>false</excludeDependencies>
 						<Embed-Dependency>*;scope=compile|runtime;inline=false;artifactId=!footprint</Embed-Dependency>
 					</instructions>
 				</configuration>
