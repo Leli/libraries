@@ -163,7 +163,8 @@
 				</configuration>
 				<executions>
 					<execution>
-						<phase>package</phase>
+						<id>install-bundle</id>
+						<phase>install</phase>
 						<goals>
 							<goal>install</goal>
 						</goals>
